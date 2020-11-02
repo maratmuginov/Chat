@@ -1,0 +1,17 @@
+﻿<Application x:Class="ChatUI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ChatUI.ViewModels"
+             xmlns:views="clr-namespace:ChatUI.Views">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary>
+                     <DataTemplate DataType="{x:Type vm:ChatViewModel}">
+                         <views:ChatView/>
+                     </DataTemplate>
+                 </ResourceDictionary>
+             </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
