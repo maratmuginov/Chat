@@ -14,7 +14,9 @@ namespace ChatUI.ViewModels
         private string _errorMessage = string.Empty;
         private bool _hasError;
         private ObservableCollection<Message> _messages;
+        private string _newMessageText;
         public ICommand SendMessageCommand { get; }
+        public ICommand StartEditingCommand { get; }
 
         public ObservableCollection<Message> Messages
         {
@@ -22,16 +24,18 @@ namespace ChatUI.ViewModels
             set => Set(ref _messages, value);
         }
 
-        public string NewMessageText { get; set; }
+        public string NewMessageText
+        {
+            get => _newMessageText;
+            set => Set(ref _newMessageText, value);
+        }
 
         public string ErrorMessage
         {
             get => _errorMessage;
             private set
             {
-                if (string.IsNullOrEmpty(value))
-                    return;
-                _errorMessage = value;
+                Set(ref _errorMessage, value);
                 HasError = true;
             }
         }
@@ -39,7 +43,7 @@ namespace ChatUI.ViewModels
         public bool HasError
         {
             get => _hasError;
-            set => Set(ref _hasError, value);
+            private set => Set(ref _hasError, value);
         }
 
         public ChatViewModel(SignalRChatService chatService)
@@ -55,7 +59,11 @@ namespace ChatUI.ViewModels
         {
             var viewModel = new ChatViewModel(chatService);
 
-            chatService.Connect().ContinueWith(task => viewModel.ErrorMessage = task.Exception?.Message);
+            chatService.Connect().ContinueWith(task =>
+            {
+                if (task.Exception != null)
+                    viewModel.ErrorMessage = task.Exception.Message;
+            });
 
             return viewModel;
         }

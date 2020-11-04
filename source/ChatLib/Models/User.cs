@@ -1,7 +1,14 @@
-﻿namespace ChatLib.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+
+namespace ChatLib.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public string Username { get; set; }
+        public User()
+        {
+            Messages = new HashSet<Message>();
+        }
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

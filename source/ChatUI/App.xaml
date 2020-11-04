@@ -7,9 +7,15 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                  <ResourceDictionary>
+
                      <DataTemplate DataType="{x:Type vm:ChatViewModel}">
                          <views:ChatView/>
                      </DataTemplate>
+
+                     <DataTemplate DataType="{x:Type vm:AboutViewModel}">
+                         <views:AboutView/>
+                     </DataTemplate>
+
                  </ResourceDictionary>
              </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

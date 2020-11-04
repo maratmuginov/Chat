@@ -12,17 +12,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <Menu.Resources>
-                <Style TargetType="MenuItem">
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="FontSize" Value="16"/>
-                </Style>
-            </Menu.Resources>
-            <MenuItem Header="File"/>
-            <MenuItem Header="Chat"/>
-            <MenuItem Header="About"/>
-        </Menu>
         <ContentControl Grid.Row="1" Content="{Binding Path=Navigator.ActiveViewModel}"/>
     </Grid>
 </Window>

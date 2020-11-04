@@ -13,7 +13,6 @@ namespace ChatUI.Services
         public SignalRChatService(HubConnection hubConnection)
         {
             _hubConnection = hubConnection;
-
             _hubConnection.On<Message>("ReceiveMessage", 
                 message => MessageReceived?.Invoke(message));
         }
@@ -22,6 +21,6 @@ namespace ChatUI.Services
             await _hubConnection.StartAsync();
 
         public async Task SendMessageAsync(Message message) => 
-            await _hubConnection.SendAsync("SendMessage", message);
+            await _hubConnection.InvokeAsync("SendMessage", message);
     }
 }

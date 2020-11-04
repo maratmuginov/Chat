@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using ChatUI.Helpers;
 using ChatUI.Services;
@@ -29,10 +30,11 @@ namespace ChatUI
                 .WithUrl("http://localhost:5000/chat")
                 .Build();
 
-        private static IServiceProvider ConfigureServices() =>
+        private static IServiceProvider ConfigureServices() => 
             new ServiceCollection()
                 .AddSingleton<Navigator>()
                 .AddSingleton<ShellViewModel>()
+                .AddSingleton<AboutViewModel>()
                 .AddSingleton(GetHubConnection())
                 .AddSingleton<SignalRChatService>()
                 .AddScoped(GetConnectedChatViewModel)

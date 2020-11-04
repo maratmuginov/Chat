@@ -22,7 +22,7 @@
 
         <Grid Background="Red" HorizontalAlignment="Stretch" ColumnSpan="2" 
               Visibility="{Binding Path=HasError, Converter={StaticResource BoolToVisibilityConverter}}">
-            <TextBlock Text="{Binding Path=ErrorMessage}"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding Path=ErrorMessage}" HorizontalAlignment="Center" Foreground="White" FontSize="16"/>
         </Grid>
 
         <Grid Grid.Column="1" Grid.Row="1">
@@ -39,9 +39,9 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock>
-                                <Run Text="Username: "/>
-                                <Run Text="{Binding Path=User.Username, FallbackValue=Anonymous}"/>
+                            <TextBlock Foreground="LightGray">
+                                <Run Foreground="Black" FontWeight="Bold" Text="{Binding Path=User.UserName, FallbackValue=Anonymous}"/>
+                                (<Run Text="{Binding Path=Sent}" />)
                             </TextBlock>
                             <TextBlock Grid.Row="1" Text="{Binding Path=Text}"/>
                         </Grid>
