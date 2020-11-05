@@ -10,15 +10,17 @@ using ChatSignalR.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ChatLib.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatSignalR.Controllers
 {
-    public class ChatController : Controller
+    [Authorize]
+    public class HomeController : Controller
     {
-        private readonly ILogger<ChatController> _logger;
+        private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
-        public ChatController(ILogger<ChatController> logger, ApplicationDbContext context, UserManager<User> userManager)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<User> userManager)
         {
             _logger = logger;
             _userManager = userManager;
@@ -33,20 +35,22 @@ namespace ChatSignalR.Controllers
                 ViewBag.CurrentUserName = currentUser.UserName;
             }
             var messages = await _context.Messages.ToListAsync();
-            return View();
+            return View(messages);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Create(Message message)
         {
-            if (ModelState.IsValid == false) 
-                return Error();
-            
-            message.UserName = User.Identity.Name;
-            var sender = await _userManager.GetUserAsync(User);
-            message.UserId = sender.Id;
-            await _context.Messages.AddAsync(message);
-            await _context.SaveChangesAsync();
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                message.UserName = User.Identity.Name;
+                var sender = await _userManager.GetUserAsync(User);
+                message.UserId = sender.Id;
+                await _context.Messages.AddAsync(message);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            return Error();
         }
 
         public IActionResult Privacy() => View();
